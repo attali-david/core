@@ -1,0 +1,18 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    env:
+      enabled: true
+
+info:
+  application:
+    name: core
+    description: A set of core java services for a REST api.
+    author: David Attali
+    version: 'v1'
+spring:
+  profiles:
+    active: dev
