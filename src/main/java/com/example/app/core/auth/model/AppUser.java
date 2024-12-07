@@ -1,4 +1,4 @@
-package com.example.app.core.account.model;
+package com.example.app.core.auth.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,6 +32,12 @@ public class AppUser implements UserDetails {
     @Column
     private String password;
 
+    @Column(name = "created_at_local")
+    private Date createdAtLocal;
+
+    @Column(name = "created_at_server")
+    private Date createdAtServer;
+
     public String getEmail() {
         return email;
     }
@@ -48,12 +54,10 @@ public class AppUser implements UserDetails {
         this.name = name;
     }
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of();
     }
 
     @Override
