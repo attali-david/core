@@ -1,6 +1,6 @@
 package com.example.app.core.config;
 
-import com.example.app.core.account.repository.AppUserDao;
+import com.example.app.core.auth.repository.AppUserDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
