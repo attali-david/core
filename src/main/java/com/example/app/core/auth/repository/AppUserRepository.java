@@ -1,6 +1,6 @@
-package com.example.app.core.account.repository;
+package com.example.app.core.auth.repository;
 
-import com.example.app.core.account.model.AppUser;
+import com.example.app.core.auth.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

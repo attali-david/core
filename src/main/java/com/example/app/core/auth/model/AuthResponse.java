@@ -1,4 +1,4 @@
-package com.example.app.core.account.model;
+package com.example.app.core.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

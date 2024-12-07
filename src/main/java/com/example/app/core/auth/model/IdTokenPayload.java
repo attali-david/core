@@ -1,4 +1,4 @@
-package com.example.app.core.account.model;
+package com.example.app.core.auth.model;
 
 public class IdTokenPayload {
     private String iss;

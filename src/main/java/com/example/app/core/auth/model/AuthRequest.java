@@ -1,4 +1,4 @@
-package com.example.app.core.account.model;
+package com.example.app.core.auth.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class AuthRequest {
     private String email;
     private String password;
 }

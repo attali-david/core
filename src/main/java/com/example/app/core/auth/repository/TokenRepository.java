@@ -1,9 +1,9 @@
-package com.example.app.core.account.repository;
+package com.example.app.core.auth.repository;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.example.app.core.account.model.Token;
+import com.example.app.core.auth.model.Token;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

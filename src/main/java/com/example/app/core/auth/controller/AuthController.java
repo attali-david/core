@@ -1,7 +1,8 @@
-package com.example.app.core.account.controller;
+package com.example.app.core.auth.controller;
 
-import com.example.app.core.account.model.AuthResponse;
-import com.example.app.core.account.service.AuthService;
+import com.example.app.core.auth.model.AppUser;
+import com.example.app.core.auth.model.AuthResponse;
+import com.example.app.core.auth.service.AuthService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,17 +29,19 @@ public class AuthController {
 
             return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
         } catch (Exception exception) {
+            LOGGER.info(exception.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> registerUser(@RequestParam String service, @RequestBody ObjectNode credentials) throws Exception {
+    public ResponseEntity<AuthResponse> registerUser(@RequestBody AppUser user) throws Exception {
         try {
-            AuthResponse authResponse = authService.register(credentials, service);
+            AuthResponse authResponse = authService.register(user);
 
             return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
         } catch (Exception exception) {
+            LOGGER.info(exception.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -50,6 +53,7 @@ public class AuthController {
 
             return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
         } catch (Exception exception) {
+            LOGGER.info(exception.toString());
             return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
         }
     }

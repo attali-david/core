@@ -1,4 +1,4 @@
-package com.example.app.core.account.model;
+package com.example.app.core.auth.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
