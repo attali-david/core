@@ -1,7 +1,7 @@
-package com.example.app.core.account.service;
+package com.example.app.core.auth.service;
 
-import com.example.app.core.account.model.AuthRequest;
-import com.example.app.core.account.model.AuthResponse;
+import com.example.app.core.auth.model.AppUser;
+import com.example.app.core.auth.model.AuthResponse;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +13,7 @@ import java.util.Map;
 public interface AuthService {
     AuthResponse authenticate(ObjectNode credentials, String service) throws Exception;
 
-    AuthResponse register(ObjectNode credentials, String service) throws Exception;
+    AuthResponse register(AppUser user) throws Exception;
 
     AuthResponse refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 

@@ -1,7 +1,9 @@
-package com.example.app.core.account.service;
-import com.example.app.core.account.model.*;
-import com.example.app.core.account.repository.AppUserDao;
-import com.example.app.core.account.repository.TokenRepository;
+package com.example.app.core.auth.service;
+import com.example.app.core.auth.model.AppUser;
+import com.example.app.core.auth.model.AuthResponse;
+import com.example.app.core.auth.model.Token;
+import com.example.app.core.auth.repository.AppUserDao;
+import com.example.app.core.auth.repository.TokenRepository;
 import com.example.app.core.config.JwtService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -36,8 +38,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import javax.swing.text.html.Option;
 
 // TODO: Handle users attempting to create accounts with existing emails
 // TODO: Add refresh token
@@ -98,31 +98,17 @@ public class AuthServiceImpl implements AuthService {
         return renewUserTokens(user);
     }
 
-
     @Override
-    public AuthResponse register(ObjectNode credentials, String service) throws Exception {
-        AppUser user;
-        if(GOOGLE.equalsIgnoreCase(service)) {
-            // This should handle exceptions and bad credentials
-            Payload googlePayload = this.verifyGoogleToken(credentials.get("credential").toString());
-            user = new AppUser().builder()
-                    .email(googlePayload.getEmail())
-                    .build();
-        } else if(APPLE.equalsIgnoreCase(service)) {
-            Map<String, Object> applePayload = this.verifyAppleToken(credentials.get("credential").toString());
-            user = new AppUser().builder()
-                    .email((String) applePayload.get("email"))
-                    .build();
-        } else if(EMAIL.equalsIgnoreCase(service)) {
-            user = new AppUser().builder()
-                    .email(credentials.get("email").toString())
-                    .password(passwordEncoder.encode(credentials.get("password").toString()))
-                    .role(Role.USER)
-                    .build();
-        } else {
-            throw new Exception("Invalid registration method");
-        }
-        return saveUser(user);
+    public AuthResponse register(AppUser user) throws Exception {
+        // TODO: Add check or throw exception if user exist
+        userDao.save(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        saveUserToken(user, refreshToken);
+
+        return AuthResponse.builder()
+                .token(jwtService.generateToken(user))
+                .refreshToken(refreshToken)
+                .build();
     }
 
     @Override
@@ -158,18 +144,6 @@ public class AuthServiceImpl implements AuthService {
 
         return AuthResponse.builder()
                 .token(token)
-                .refreshToken(refreshToken)
-                .build();
-    }
-
-    private AuthResponse saveUser(AppUser user) {
-        // TODO: Add check or throw exception if user exist
-        userDao.save(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(user, refreshToken);
-
-        return AuthResponse.builder()
-                .token(jwtService.generateToken(user))
                 .refreshToken(refreshToken)
                 .build();
     }
