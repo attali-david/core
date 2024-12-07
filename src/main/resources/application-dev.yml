@@ -14,3 +14,9 @@ spring:
     password: password
     baselineOnMigrate: false
     locations: classpath:db/migration
+security:
+  jwt:
+    secret-key: bddae3166f7f5d6d0416a29f3033c52b0ba09cd03b2e66b10bdac24e6c91fa8b
+    expiration-time: 900000 # 15 mins
+    refresh-token:
+      expiration: 604800000 # 7 days

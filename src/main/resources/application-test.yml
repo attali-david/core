@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:tc:postgresql:14-alpine:///core
+    url: jdbc:tc:postgresql:17:///core
   sql:
     init:
       mode: always

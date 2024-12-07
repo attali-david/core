@@ -8,3 +8,16 @@ spring:
   sql:
     init:
       mode: always # you won't do this in prod, I'm just doing this for demo purposes
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/core
+    user: postgres
+    password: password
+    baselineOnMigrate: false
+    locations: classpath:db/migration
+security:
+  jwt:
+    secret-key: bddae3166f7f5d6d0416a29f3033c52b0ba09cd03b2e66b10bdac24e6c91fa8b
+    expiration-time: 86400000 # a day
+    refresh-token:
+      expiration: 604800000 # 7 days
