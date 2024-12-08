@@ -1,0 +1,6 @@
+CREATE TABLE space (
+    id SERIAL PRIMARY KEY,
+    user_fk INT REFERENCES app_user (id) ON DELETE CASCADE NOT NULL,
+    created_at_server TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    title TEXT NOT NULL
+)
