@@ -20,3 +20,11 @@ security:
     expiration-time: 900000 # 15 mins
     refresh-token:
       expiration: 604800000 # 7 days
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          socket: DEBUG
+        messaging: DEBUG
+        security: DEBUG
