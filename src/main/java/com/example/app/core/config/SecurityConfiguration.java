@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         http.csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**") // Whitelisted paths
+                .requestMatchers("/auth/**", "/ws/**") // Whitelisted paths
                 .permitAll()
                 .anyRequest()
                 .authenticated() // Authenticate all non-whitelisted paths
