@@ -1,6 +1,7 @@
 package com.example.app.core.space.service;
 
 import com.example.app.core.auth.model.AppUser;
+import com.example.app.core.security.SecurityUtils;
 import com.example.app.core.space.model.AcknowledgeRequest;
 import com.example.app.core.space.model.Space;
 import com.example.app.core.space.model.SpaceUserRelationship;
@@ -31,9 +32,13 @@ public class SpaceServiceImpl implements SpaceService {
         return spaceRepository.save(space);
     }
 
-    public void deleteSpace(Long id) throws Exception {
-        if (spaceRepository.existsById(id)) {
+    public void deleteSpace(long id) throws Exception {
+        if (!spaceRepository.existsById(id)) {
             throw new Exception("Entity not found.");
+        }
+
+        if (!this.userBelongsToSpace(id)) {
+            throw new Exception("User lacks permission.");
         }
         spaceRepository.deleteById(id);
     }
@@ -73,6 +78,12 @@ public class SpaceServiceImpl implements SpaceService {
                 acknowledgeRequest.getAcknowledgeTimestamp(),
                 acknowledgeRequest.getAccepted());
         Optional<Space> space = spaceRepository.findById(acknowledgeRequest.getSpaceId());
+    }
+
+    @Override
+    public boolean userBelongsToSpace(long spaceId) {
+        SpaceUserRelationship userSpace = spaceUserRelationshipRepository.findByIds(spaceId, SecurityUtils.getCurrentUser().getId());
+        return userSpace != null;
     }
 
     public List<SpaceUserRelationship> getUsersInSpace(Long spaceId) {

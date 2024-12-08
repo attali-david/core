@@ -45,7 +45,7 @@ public class SpaceController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Space> deleteSpace(@PathVariable Long id) {
+    public ResponseEntity<Space> deleteSpace(@PathVariable long id) {
         try {
             spaceService.deleteSpace(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

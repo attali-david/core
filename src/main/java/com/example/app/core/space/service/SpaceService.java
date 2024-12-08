@@ -9,7 +9,7 @@ import java.util.List;
 public interface SpaceService {
     Space createSpace(Space space) throws Exception;
 
-    void deleteSpace(Long id) throws Exception;
+    void deleteSpace(long id) throws Exception;
 
     List<Space> findSpaces() throws Exception;
 
@@ -18,4 +18,6 @@ public interface SpaceService {
     List<SpaceUserRelationship> findSpaceInvite(Long userId) throws Exception;
 
     void acknowledgeSpaceInvite(AcknowledgeRequest acknowledgeRequest) throws Exception;
+
+    boolean userBelongsToSpace(long spaceId);
 }
