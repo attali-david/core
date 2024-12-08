@@ -18,6 +18,4 @@ public interface SpaceService {
     List<SpaceUserRelationship> findSpaceInvite(Long userId) throws Exception;
 
     void acknowledgeSpaceInvite(AcknowledgeRequest acknowledgeRequest) throws Exception;
-
-    boolean userBelongsToSpace(long spaceId);
 }

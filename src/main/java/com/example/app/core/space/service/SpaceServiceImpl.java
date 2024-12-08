@@ -36,8 +36,8 @@ public class SpaceServiceImpl implements SpaceService {
         if (!spaceRepository.existsById(id)) {
             throw new Exception("Entity not found.");
         }
-
-        if (!this.userBelongsToSpace(id)) {
+        boolean userSpace = spaceUserRelationshipRepository.existsByIds(id, SecurityUtils.getCurrentUser().getId());
+        if (!userSpace) {
             throw new Exception("User lacks permission.");
         }
         spaceRepository.deleteById(id);
@@ -78,12 +78,6 @@ public class SpaceServiceImpl implements SpaceService {
                 acknowledgeRequest.getAcknowledgeTimestamp(),
                 acknowledgeRequest.getAccepted());
         Optional<Space> space = spaceRepository.findById(acknowledgeRequest.getSpaceId());
-    }
-
-    @Override
-    public boolean userBelongsToSpace(long spaceId) {
-        SpaceUserRelationship userSpace = spaceUserRelationshipRepository.findByIds(spaceId, SecurityUtils.getCurrentUser().getId());
-        return userSpace != null;
     }
 
     public List<SpaceUserRelationship> getUsersInSpace(Long spaceId) {
